@@ -14,5 +14,8 @@
         "--runtime=nodejs16"
       ]
     }
-  ]
+  ],
+  "options": {
+    "logging": "CloudLoggingOnly"
+  }
 }
