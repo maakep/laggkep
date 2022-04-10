@@ -6,7 +6,7 @@
         "gcloud",
         "functions",
         "deploy",
-        ["alias"],
+        "alias",
         "--region=europe-west1",
         "--entry-point=alias",
         "--source=.",
