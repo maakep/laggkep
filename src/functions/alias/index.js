@@ -7,6 +7,7 @@ exports.alias = async (request, response) => {
   const res = await col.get();
 
   const docs = res.docs;
-
-  response.status(200).send("Hello World!" + docs?.[0]);
+  const message = "Hello World!" + docs?.[0]?.data()[0];
+  console.log(res);
+  response.status(200).send(message);
 };
