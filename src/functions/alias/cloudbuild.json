@@ -16,6 +16,6 @@
     }
   ],
   "options": {
-    "logging": "CloudLoggingOnly"
+    "logging": "CLOUD_LOGGING_ONLY"
   }
 }
