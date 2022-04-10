@@ -8,5 +8,5 @@ exports.alias = async (request, response) => {
 
   const docs = res.docs;
 
-  response.status(200).send("Hello World!", docs?.[0]);
+  response.status(200).send("Hello World!" + docs?.[0]);
 };
