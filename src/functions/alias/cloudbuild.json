@@ -9,9 +9,10 @@
         "alias",
         "--region=europe-west1",
         "--entry-point=alias",
-        "--source=.",
+        "--source=./index.js",
         "--trigger-http",
-        "--runtime=nodejs16"
+        "--runtime=nodejs16",
+        "--allow-unauthenticated"
       ]
     }
   ],

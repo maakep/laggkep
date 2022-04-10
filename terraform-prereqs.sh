@@ -11,11 +11,12 @@ gsutil mb -c standard -l europe-west1 -p "$PROJECT_ID" --pap enforced "gs://$TF_
 
 
 gcloud services enable \
-    cloudbuild.googleapis.com
-#     cloudresourcemanager.googleapis.com \
-#     serviceusage.googleapis.com \
-#     iamcredentials.googleapis.com \
-#     iam.googleapis.com \
-#     storage-component.googleapis.com \
-#     storage-api.googleapis.com \
+    cloudbuild.googleapis.com \
+    cloudfunctions.googleapis.com \
+    iam.googleapis.com \
+    cloudresourcemanager.googleapis.com \
+    serviceusage.googleapis.com \
+    iamcredentials.googleapis.com \
+    storage-component.googleapis.com \
+    storage-api.googleapis.com \
 #     --project="$PROJECT_ID"
