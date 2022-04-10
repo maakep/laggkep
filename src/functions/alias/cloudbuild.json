@@ -1,0 +1,18 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+      "args": [
+        "gcloud",
+        "functions",
+        "deploy",
+        ["alias"],
+        "--region=europe-west1",
+        "--entry-point=alias",
+        "--source=.",
+        "--trigger-http",
+        "--runtime=nodejs16"
+      ]
+    }
+  ]
+}
