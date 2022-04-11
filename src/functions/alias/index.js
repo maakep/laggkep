@@ -4,16 +4,16 @@ const collectionRef = firestore.collection("aliases");
 
 const ROUTES = {
   DELETE: {
-    "/alias": deleteAliases,
-    "/alias/id": deleteId,
+    "/": deleteAliases,
+    "/id": deleteId,
   },
   POST: {
-    "/alias": setAliases,
+    "/": setAliases,
   },
   GET: {
-    "/alias": getAlias,
-    "/alias/query": getQuery,
-    "/alias/all": getAliases,
+    "/": getAlias,
+    "/query": getQuery,
+    "/all": getAliases,
   },
 };
 
