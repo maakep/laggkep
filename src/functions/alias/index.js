@@ -44,7 +44,7 @@ async function getAlias(req) {
 // https://firebase.google.com/docs/firestore/query-data/queries
 async function getQuery(req) {
   const { args } = req.body;
-  const snapshot = await collectionRef.where("aliases", args[0], args[1]).get();
+  const snapshot = await collectionRef.where(args[0], args[1], args[2]).get();
   const data = extractData(snapshot);
   return data;
 }
