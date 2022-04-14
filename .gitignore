@@ -1,2 +1,3 @@
 */**/node_modules
 access_key.json
+.terraform*
