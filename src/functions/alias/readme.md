@@ -15,14 +15,10 @@ Creates or adds aliases to id
 
 # GET /alias
 
-Gets id(s) based on alias(es)
+> ?aliases=person1,person2,etc
+> &profile=full
 
-```json
-{
-  "id": "string, ex <@123123123>",
-  "aliases": ["array"]
-}
-```
+Gets id(s) based on alias(es). Specify profile=full to get all unordered data, exclude for only ids, ordered according to order of alias input.
 
 # GET /alias/query
 

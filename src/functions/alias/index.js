@@ -33,13 +33,18 @@ async function deleteId(req) {
 }
 
 async function getAliases(req) {
-  const { aliases } = req.query;
+  const { aliases, profile } = req.query;
   const aliasArray = aliases.split(",");
   const snapshot = await collectionRef
     .where("aliases", "array-contains-any", aliasArray)
     .get();
   const data = extractData(snapshot);
-  return data;
+
+  if (profile == "full") {
+    return data;
+  }
+
+  return aliases.map((x) => data.find((y) => y.aliases.includes(x))?.id);
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries
