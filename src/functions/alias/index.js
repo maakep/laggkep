@@ -44,7 +44,7 @@ async function getAliases(req) {
     return data;
   }
 
-  return aliases.map((x) => data.find((y) => y.aliases.includes(x))?.id);
+  return aliasArray.map((x) => data.find((y) => y.aliases.includes(x))?.id);
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries
