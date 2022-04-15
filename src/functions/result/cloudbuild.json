@@ -15,7 +15,7 @@
         "--runtime=nodejs16",
         "--allow-unauthenticated",
         "--set-env-vars",
-        "_ALIAS_URL=$$_ALIAS_URL"
+        "_ALIAS_URL=$_ALIAS_URL"
       ],
       "secretEnv": ["_ALIAS_URL"]
     }
