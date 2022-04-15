@@ -33,10 +33,10 @@ async function deleteId(req) {
 }
 
 async function getAliases(req) {
-  const { queryAliases } = req.query;
-  const aliases = queryAliases.split(",");
+  const { aliases } = req.query;
+  const aliasArray = aliases.split(",");
   const snapshot = await collectionRef
-    .where("aliases", "array-contains-any", aliases)
+    .where("aliases", "array-contains-any", aliasArray)
     .get();
   const data = extractData(snapshot);
   return data;
