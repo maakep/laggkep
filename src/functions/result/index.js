@@ -37,7 +37,6 @@ async function getQuery(req) {
   const snapshot = await query.get();
   return extractData(snapshot);
 }
-getQuery();
 
 async function getResultsForUser(req) {
   const { user } = req.query;
