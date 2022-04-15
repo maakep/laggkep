@@ -26,8 +26,7 @@ function extractData(snapshot) {
 async function deleteId(req) {
   const { id } = req.body;
   const doc = collectionRef.doc(id);
-  const result = await doc.delete();
-  console.log(result);
+  await doc.delete();
 
   return { status: 200, message: "Very great" };
 }

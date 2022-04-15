@@ -19,9 +19,9 @@
     }
   ],
   "availableSecrets": {
-    "secretmanager": [
+    "secretNanager": [
       {
-        "versionName": "projects/883873320046/secrets/_ALIAS_URL",
+        "versionName": "projects/883873320046/secrets/_ALIAS_URL/versions/1",
         "env": "_ALIAS_URL"
       }
     ]
