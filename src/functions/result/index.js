@@ -34,10 +34,9 @@ async function getQuery(req) {
 
 async function getResultsForUser(req) {
   const { user } = req.query;
-
   const id = (await singleAliasToID(user)) || user;
 
-  const snapshot = await collectionRef.where("id", "==", id).get();
+  const snapshot = await collectionRef.where("username", "==", id).get();
   return extractData(snapshot);
 }
 
@@ -100,7 +99,7 @@ async function saveResults(req) {
 
 async function singleAliasToID(alias) {
   const res = await axios.get(`${ALIAS_URL}?aliases=${alias.toLowerCase()}`);
-  return res.data?.[0]?.id;
+  return res.data?.[0];
 }
 
 exports.result = async (req, response) => {
