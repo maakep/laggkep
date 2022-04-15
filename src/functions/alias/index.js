@@ -11,9 +11,9 @@ const ROUTES = {
     "/": setAliases,
   },
   GET: {
-    "/": getAlias,
+    "/": getAliases,
     "/query": getQuery,
-    "/all": getAliases,
+    "/all": getAllAliases,
   },
 };
 
@@ -32,8 +32,9 @@ async function deleteId(req) {
   return { status: 200, message: "Very great" };
 }
 
-async function getAlias(req) {
-  const { aliases } = req.body;
+async function getAliases(req) {
+  const { queryAliases } = req.query;
+  const aliases = queryAliases.split(",");
   const snapshot = await collectionRef
     .where("aliases", "array-contains-any", aliases)
     .get();
@@ -49,7 +50,7 @@ async function getQuery(req) {
   return data;
 }
 
-async function getAliases(req) {
+async function getAllAliases(req) {
   const snapshot = await collectionRef.get();
   const data = extractData(snapshot);
   return data;
