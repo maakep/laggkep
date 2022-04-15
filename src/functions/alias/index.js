@@ -51,8 +51,8 @@ async function getQuery(req) {
   const { args } = req.body;
   let query = collectionRef;
 
-  args.forEach(() => {
-    query = query.where(args[0], args[1], args[2]);
+  args.forEach((x) => {
+    query = query.where(x[0], x[1], x[2]);
   });
 
   const snapshot = await query.get();
