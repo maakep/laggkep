@@ -4,6 +4,7 @@
       "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
       "entrypoint": "bash",
       "args": [
+        "-c",
         "gcloud",
         "functions",
         "deploy",
@@ -14,20 +15,11 @@
         "--trigger-http",
         "--runtime=nodejs16",
         "--allow-unauthenticated",
-        "--set-env-vars",
-        "_ALIAS_URL=$_ALIAS_URL"
-      ],
-      "secretEnv": ["_ALIAS_URL"]
+        "--set-secrets",
+        "projects/883873320046/secrets/_ALIAS_URL/versions/latest"
+      ]
     }
   ],
-  "availableSecrets": {
-    "secretManager": [
-      {
-        "versionName": "projects/883873320046/secrets/_ALIAS_URL/versions/1",
-        "env": "_ALIAS_URL"
-      }
-    ]
-  },
   "options": {
     "logging": "CLOUD_LOGGING_ONLY"
   }
