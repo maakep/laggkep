@@ -109,7 +109,11 @@ async function singleAliasToID(alias) {
 }
 
 exports.result = async (req, response) => {
-  console.log(req.method, req.path);
-  const result = await ROUTES[req.method][req.path](req);
-  response?.status(200).json(result);
+  try {
+    const result = await ROUTES[req.method][req.path](req);
+    response?.status(200).json(result);
+  } catch (e) {
+    console.error(new Error(e));
+    response?.status(500).json(e);
+  }
 };
