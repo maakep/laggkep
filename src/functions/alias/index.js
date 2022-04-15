@@ -9,10 +9,10 @@ const ROUTES = {
   },
   POST: {
     "/": setAliases,
+    "/query": getQuery,
   },
   GET: {
     "/": getAliases,
-    "/query": getQuery,
     "/all": getAllAliases,
   },
 };
@@ -49,9 +49,14 @@ async function getAliases(req) {
 // https://firebase.google.com/docs/firestore/query-data/queries
 async function getQuery(req) {
   const { args } = req.body;
-  const snapshot = await collectionRef.where(args[0], args[1], args[2]).get();
-  const data = extractData(snapshot);
-  return data;
+  let query = collectionRef;
+
+  args.forEach(() => {
+    query = query.where(args[0], args[1], args[2]);
+  });
+
+  const snapshot = await query.get();
+  return extractData(snapshot);
 }
 
 async function getAllAliases(req) {

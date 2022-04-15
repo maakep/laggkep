@@ -11,11 +11,11 @@ const ROUTES = {
   },
   POST: {
     "/": saveResults,
+    "/query": getQuery,
   },
   GET: {
     "/": getResultsForUser,
     "/all": getAllResults,
-    "/query": getQuery,
   },
 };
 
