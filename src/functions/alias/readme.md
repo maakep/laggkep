@@ -1,6 +1,6 @@
 # ALIAS
 
-Service for storing & retrieving aliases. Always returns json.
+Service for storing & retrieving aliases. Always returns json!
 
 # POST /alias
 

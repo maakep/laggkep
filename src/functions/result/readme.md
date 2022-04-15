@@ -1,6 +1,6 @@
 # Result
 
-Service for storing & retrieving game results. All responses in json
+Service for storing & retrieving game results. All responses in json!
 
 Dependencies
 
