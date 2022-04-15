@@ -16,7 +16,7 @@
         "--runtime=nodejs16",
         "--allow-unauthenticated",
         "--set-secrets",
-        "_ALIAS_URL=_ALIAS_URL:latest"
+        "_ALIAS_URL=projects/883873320046/secrets/_ALIAS_URL:latest"
       ]
     }
   ],
