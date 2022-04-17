@@ -84,7 +84,8 @@ async function saveResults(req) {
         username: player,
         timestamp: date,
         win: parseInt(team) == winner,
-        game: game?.trim() || "",
+        _game: game?.trim() || "",
+        game: game?.trim().toLowerCase() || "",
         matchId: matchId?.trim() || "",
       };
       resultBatch.push(gameResult);
