@@ -48,7 +48,7 @@ async function getResultsForUser(req) {
 
 async function deleteResult(req) {
   const { id } = req.body;
-  const doc = collectionRef.doc(id);
+  const doc = collectionRef.where("id", "==", id);
   await doc.delete();
 
   return { status: 200, message: "Very great" };
@@ -94,7 +94,7 @@ async function saveResults(req) {
   const batch = firestore.batch();
 
   resultBatch.forEach((result) => {
-    const docRef = collectionRef.doc(result.id);
+    const docRef = collectionRef.doc();
     batch.set(docRef, result);
   });
 

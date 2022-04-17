@@ -38,7 +38,7 @@ Executes custom query. [Query documentation here.](https://firebase.google.com/d
 
 ```json
 {
-  "args": [["game", "==", "dota 2"], ["id" "==", "1337"]]
+  "args": [["game", "==", "dota 2"], ["id" "==", "13-3-7"]]
 }
 ```
 
