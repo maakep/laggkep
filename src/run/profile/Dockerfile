@@ -4,7 +4,7 @@ FROM node:12-slim
 
 WORKDIR /app/frontend
 COPY /frontend/package*.json ./
-RUN npm install --only=production
+RUN npm ci
 COPY /frontend/ ./
 
 RUN npm run build-prod
@@ -16,6 +16,6 @@ WORKDIR /app/backend
 # A wildcard is used to ensure both package.json AND package-lock.json are copied.
 # Copying this separately prevents re-running npm install on every code change.
 COPY /backend/package*.json ./
-RUN npm install --only=production
+RUN npm ci
 COPY /backend/ ./
 CMD [ "npm", "start" ]
