@@ -6,7 +6,7 @@
         "build",
         "-t",
         "gcr.io/$PROJECT_ID/profile_image:$COMMIT_SHA",
-        "."
+        "./src/run/profile/Dockerfile"
       ]
     },
     {
