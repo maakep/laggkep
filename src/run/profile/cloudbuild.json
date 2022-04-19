@@ -25,7 +25,7 @@
       ]
     }
   ],
-  "images": "gcr.io/laggkep/profile_image",
+  "images": ["gcr.io/laggkep/profile_image"],
   "options": {
     "logging": "CLOUD_LOGGING_ONLY"
   }
