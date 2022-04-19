@@ -7,7 +7,7 @@ COPY /frontend/package*.json ./
 RUN npm install --only=production
 COPY /frontend/ ./
 
-CMD ["npm", "run", "build-production"]
+RUN npm run build-production
 
 
 WORKDIR /app/backend
