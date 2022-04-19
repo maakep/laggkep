@@ -3,7 +3,7 @@ const axios = require("axios").default;
 const firestore = new Firestore();
 const collectionRef = firestore.collection("results");
 
-const ALIAS_URL = process.env._ALIAS_URL;
+const ALIAS_URL = process.env._FUNCTION_BASE_URL + "/alias";
 
 const ROUTES = {
   DELETE: {
@@ -34,7 +34,7 @@ async function getQuery(req) {
     query = query.where(x[0], x[1], x[2]);
   });
 
-  const snapshot = await query.get();
+  const snapshot = await query.orderBy("timestamp", "desc").get();
   return extractData(snapshot);
 }
 
@@ -42,20 +42,23 @@ async function getResultsForUser(req) {
   const { user } = req.query;
   const id = (await singleAliasToID(user)) || user;
 
-  const snapshot = await collectionRef.where("username", "==", id).get();
+  const snapshot = await collectionRef
+    .where("username", "==", id)
+    .orderBy("timestamp", "desc")
+    .get();
   return extractData(snapshot);
 }
 
 async function deleteResult(req) {
   const { id } = req.body;
-  const doc = collectionRef.where("id", "==", id);
+  const doc = collectionRef.where("id", "==", id).orderBy("timestamp", "desc");
   await doc.delete();
 
   return { status: 200, message: "Very great" };
 }
 
 async function getAllResults(req) {
-  const snapshot = await collectionRef.get();
+  const snapshot = await collectionRef.orderBy("timestamp", "desc").get();
   const data = extractData(snapshot);
   return data;
 }

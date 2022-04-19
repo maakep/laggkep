@@ -1,0 +1,32 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/cloud-builders/docker",
+      "args": ["build", "-t", "gcr.io/laggkep/profile_image", "."]
+    },
+    {
+      "name": "gcr.io/cloud-builders/docker",
+      "args": ["push", "gcr.io/laggkep/profile_image"]
+    },
+    {
+      "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+      "entrypoint": "gcloud",
+      "args": [
+        "run",
+        "deploy",
+        "profile",
+        "--image",
+        "gcr.io/laggkep/profile_image",
+        "--region",
+        "europe-west1",
+        "--allow-unauthenticated",
+        "--set-secrets",
+        "_FUNCTION_BASE_URL=projects/883873320046/secrets/FUNCTION_BASE_URL:latest"
+      ]
+    }
+  ],
+  "images": "gcr.io/laggkep/profile_image",
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY"
+  }
+}

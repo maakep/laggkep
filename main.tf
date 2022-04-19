@@ -39,3 +39,18 @@ resource "google_cloudbuild_trigger" "result" {
     }
   }
 }
+
+resource "google_cloudbuild_trigger" "profile" {
+  name            = "deploy-profile"
+  filename        = "src/run/profile/cloudbuild.json"
+  included_files  = ["src/run/profile/**"]
+  ignored_files   = ["*.md"]
+  service_account = var.service_account_email
+  github {
+    owner = "maakep"
+    name  = "laggkep"
+    push {
+      branch = "^main$"
+    }
+  }
+}
