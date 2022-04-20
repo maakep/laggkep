@@ -161,7 +161,7 @@ function getOptions() {
 }
 
 const Body = styled.div`
-  background: #FF66FF;
+  background: #D99AB4;
 `;
 
 const headerHeight = 70;
@@ -175,6 +175,7 @@ const Header = styled.div`
 const HeaderItem = styled.div`
   display: flex;
   justify-content: center;
+  background: #FF66FF;
   align-items: center;
   padding: 8px;
 `;
@@ -183,6 +184,7 @@ const SquareGraphBlock = styled(Block)`
   width: 300px;
   height: 300px;
   margin: 16px;
+  background: #FF66FF;
   position: relative;
 `;
 
@@ -190,6 +192,7 @@ const RectGraphBlock = styled(Block)`
   width: 900px;
   height: 460px;
   margin: 16px;
+  background: #FF66FF;
   position: relative;
 `;
 
