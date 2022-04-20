@@ -160,13 +160,15 @@ function getOptions() {
   };
 }
 
-const Body = styled.div``;
+const Body = styled.div`
+  background: #FF66FF;
+`;
 
 const headerHeight = 70;
 const Header = styled.div`
   width: 100%;
   height: ${headerHeight}px;
-  background: #292e34;
+  background: #FF33FF;
   display: flex;
   justify-content: space-between;
 `;
