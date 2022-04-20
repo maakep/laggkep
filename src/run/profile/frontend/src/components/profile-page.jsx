@@ -31,7 +31,7 @@ export function ProfilePage({ data }) {
   const gamesOverTime = {};
   const mmrOverTime = {};
 
-  // data = data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  data = data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
   let mmr = 1337;
 
   data.forEach((x, i) => {
