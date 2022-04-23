@@ -40,6 +40,21 @@ resource "google_cloudbuild_trigger" "result" {
   }
 }
 
+resource "google_cloudbuild_trigger" "d2pos" {
+  name            = "deploy-d2pos"
+  filename        = "src/functions/d2pos/cloudbuild.json"
+  included_files  = ["src/functions/d2pos/**"]
+  ignored_files   = ["*.md"]
+  service_account = var.service_account_email
+  github {
+    owner = "maakep"
+    name  = "laggkep"
+    push {
+      branch = "^main$"
+    }
+  }
+}
+
 resource "google_cloudbuild_trigger" "profile" {
   name            = "deploy-profile"
   filename        = "src/run/profile/cloudbuild.json"
