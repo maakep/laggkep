@@ -41,6 +41,11 @@ async function getAliases(req) {
 
   if (profile == "full") {
     return data;
+  } else if (profile == "partial") {
+    return aliasArray.map((x) => ({
+      alias: x,
+      id: data.find((y) => y.aliases.includes(x))?.id,
+    }));
   }
 
   return aliasArray.map((x) => data.find((y) => y.aliases.includes(x))?.id);
