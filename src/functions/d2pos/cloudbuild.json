@@ -1,0 +1,24 @@
+{
+  "steps": [
+    {
+      "name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+      "args": [
+        "gcloud",
+        "functions",
+        "deploy",
+        "d2pos",
+        "--region=europe-west1",
+        "--entry-point=d2pos",
+        "--source=src/functions/d2pos",
+        "--trigger-http",
+        "--runtime=nodejs16",
+        "--allow-unauthenticated",
+        "--set-secrets",
+        "_FUNCTION_BASE_URL=projects/883873320046/secrets/FUNCTION_BASE_URL:latest"
+      ]
+    }
+  ],
+  "options": {
+    "logging": "CLOUD_LOGGING_ONLY"
+  }
+}
