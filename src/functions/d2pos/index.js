@@ -14,9 +14,8 @@ const ROUTES = {
 };
 
 async function savePreference(req) {
-  // const { preference, id } = req.body;
-  const preference = [1, 3, 5, "fill", 3, 2];
-  const id = cleanId("157775827692421120");
+  const { preference, id } = req.body;
+
   if (
     preference?.length > 6 ||
     isNaN(id) ||
