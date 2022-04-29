@@ -46,7 +46,7 @@ async function getPreferences(req) {
   const data = extractData(prefsSnapshot);
 
   return aliases.map((x) => {
-    const id = res.data.find((z) => z.alias == x)?.id;
+    const id = isDiscordId(x) ? x : res.data.find((z) => z.alias == x)?.id;
     const pref = data.find((y) => y.id == id);
 
     return {
