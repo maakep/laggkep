@@ -14,7 +14,9 @@ const ROUTES = {
 };
 
 async function savePreference(req) {
-  const { preference, id } = req.body;
+  let { preference, id } = req.body;
+
+  id = cleanId(id);
 
   if (
     preference?.length > 6 ||
@@ -25,7 +27,7 @@ async function savePreference(req) {
 
   const doc = collectionRef.doc(id);
   await doc.set({
-    id: cleanId(id),
+    id: id,
     preference: preference,
   });
 

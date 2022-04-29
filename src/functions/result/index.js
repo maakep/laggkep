@@ -51,8 +51,10 @@ async function getResultsForUser(req) {
 
 async function deleteResult(req) {
   const { id } = req.body;
-  const doc = collectionRef.where("id", "==", id).orderBy("timestamp", "desc");
-  await doc.delete();
+  const doc = await collectionRef.where("matchid", "==", id).get();
+  doc.forEach((x) => {
+    x.ref.delete();
+  });
 
   return { status: 200, message: "Very great" };
 }
