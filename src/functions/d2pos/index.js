@@ -19,7 +19,7 @@ async function savePreference(req) {
   if (
     preference?.length > 6 ||
     isNaN(id) ||
-    !preference.every((x) => [1, 2, 3, 4, 5, "fill"].includes(x))
+    !preference.every((x) => ["1", "2", "3", "4", "5", "fill"].includes(x))
   )
     return "bad";
 
