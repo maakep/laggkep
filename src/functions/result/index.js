@@ -51,7 +51,7 @@ async function getResultsForUser(req) {
 
 async function deleteResult(req) {
   const { id } = req.body;
-  const doc = await collectionRef.where("matchid", "==", id).get();
+  const doc = await collectionRef.where("matchId", "==", id).get();
   doc.forEach((x) => {
     x.ref.delete();
   });
