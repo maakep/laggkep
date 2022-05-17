@@ -5,7 +5,7 @@ import { SearchPage } from "./search-page";
 export function App() {
   const [data, setData] = React.useState(window.serverData);
 
-  return Boolean(data.length) ? (
+  return Boolean(data != undefined) ? (
     <ProfilePage data={data} />
   ) : (
     <SearchPage setData={setData} />

@@ -32,10 +32,12 @@ export function ProfilePage({ data }) {
   const gamesOverTime = {};
   const mmrOverTime = {};
 
-  data = data.reverse();
+  const results = data.results.reverse();
+  const aliases = data.aliases?.[0]?.aliases;
+  const prefs = data.prefs?.[0]?.preference;
   let mmr = 1337;
 
-  data.forEach((x, i) => {
+  results.forEach((x, i) => {
     wins += Number(x.win);
     losses += Number(!x.win);
 
@@ -64,7 +66,7 @@ export function ProfilePage({ data }) {
     }
   });
 
-  const winrate = wins / (wins + losses);
+  const winrate = ((wins / (wins + losses)) * 100).toFixed(2);
 
   return (
     <Body>
@@ -75,7 +77,23 @@ export function ProfilePage({ data }) {
       </Header>
       <Row>
         <SquareGraphBlock>
-          <Title>Overall winrate ({winrate.toFixed(3) * 100}%)</Title>
+          <Title>Aliases</Title>
+          <Scroller>
+            {aliases.map((x) => {
+              return <SmallBlock>{x}</SmallBlock>;
+            })}
+          </Scroller>
+        </SquareGraphBlock>
+        <SquareGraphBlock>
+          <Title>Dota preferences</Title>
+          <div>
+            {prefs.map((x) => {
+              return <SmallBlock>{x}</SmallBlock>;
+            })}
+          </div>
+        </SquareGraphBlock>
+        <SquareGraphBlock>
+          <Title>Overall winrate ({winrate}%)</Title>
           <div>
             <Doughnut
               options={getOptions()}
@@ -192,9 +210,33 @@ const RectGraphBlock = styled(Block)`
   position: relative;
 `;
 
+const SmallBlock = styled.div`
+  padding: 8px;
+  margin: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+`;
+
 const Title = styled.span`
   position: absolute;
-  font-size: 24px;
-  top: -14px;
+  font-size: 20px;
+  top: -13px;
   font-weight: bold;
+`;
+
+const Scroller = styled.div`
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(79, 118, 165);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #292e34;
+  }
 `;
