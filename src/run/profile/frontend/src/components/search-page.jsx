@@ -17,8 +17,8 @@ export function SearchPage({ setData }) {
 
   async function fetchData() {
     const result = await (await fetch(`/api/profile/${input}`)).json();
-    if (result?.length) {
-      setData(result);
+    if (result?.data) {
+      setData(result.data);
       history.pushState({}, "", `/id/${input}`);
     }
   }
