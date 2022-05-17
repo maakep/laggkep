@@ -79,7 +79,7 @@ export function ProfilePage({ data }) {
         <SquareGraphBlock>
           <Title>Aliases</Title>
           <Scroller>
-            {aliases.map((x) => {
+            {aliases?.map((x) => {
               return <SmallBlock>{x}</SmallBlock>;
             })}
           </Scroller>
@@ -87,7 +87,7 @@ export function ProfilePage({ data }) {
         <SquareGraphBlock>
           <Title>Dota preferences</Title>
           <div>
-            {prefs.map((x) => {
+            {prefs?.map((x) => {
               return <SmallBlock>{x}</SmallBlock>;
             })}
           </div>

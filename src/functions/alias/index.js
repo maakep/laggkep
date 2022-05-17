@@ -13,6 +13,7 @@ const ROUTES = {
   },
   GET: {
     "/": getAliases,
+    "/id": getAliasesForId,
     "/all": getAllAliases,
   },
 };
@@ -37,7 +38,17 @@ async function getAliases(req) {
   const snapshot = await collectionRef
     .where("aliases", "array-contains-any", aliasArray)
     .get();
+
   const data = extractData(snapshot);
+  
+  aliasArray.forEach(x => {
+    if (!isNaN(x)) {
+      const doc = await collectionRef.doc(x).get();
+      if (doc.exists) {
+        data.push(doc.data());
+      }
+    }
+  })
 
   if (profile == "full") {
     return data;
@@ -49,6 +60,13 @@ async function getAliases(req) {
   }
 
   return aliasArray.map((x) => data.find((y) => y.aliases.includes(x))?.id);
+}
+
+async function getAliasesForId(req) {
+  const { id } = req.query;
+  const snapshot = await collectionRef.doc(id).get();
+  const data = extractData(snapshot);
+  return data;
 }
 
 // https://firebase.google.com/docs/firestore/query-data/queries
