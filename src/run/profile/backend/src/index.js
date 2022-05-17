@@ -30,7 +30,7 @@ app.get("/api/profile/:id", async (req, res) => {
   const user = req.params.id;
   const data = await getProfileData(user);
 
-  res.json({ ...results });
+  res.json({ data });
 });
 
 app.get("/*.(js|png)", (req, res) => {
