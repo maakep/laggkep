@@ -17,7 +17,7 @@ app.get("(/|/id/:id)", async (req, res) => {
     const someFetchedProfileData = await getProfileData(req.params.id);
 
     const injectedHtml = html.replace(
-      "[]",
+      "undefined",
       escapeHTML(JSON.stringify(someFetchedProfileData))
     );
     return res.send(injectedHtml);
