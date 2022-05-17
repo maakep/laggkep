@@ -40,15 +40,15 @@ async function getAliases(req) {
     .get();
 
   const data = extractData(snapshot);
-  
-  aliasArray.forEach(x => {
+
+  aliasArray.forEach(async (x) => {
     if (!isNaN(x)) {
       const doc = await collectionRef.doc(x).get();
       if (doc.exists) {
         data.push(doc.data());
       }
     }
-  })
+  });
 
   if (profile == "full") {
     return data;
