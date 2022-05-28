@@ -134,15 +134,19 @@ function validate(id, aliases) {
 
 async function deleteAliases(req) {
   const { id, aliases } = req.body;
+
   const docRef = collectionRef.doc(id);
   const doc = await docRef.get();
 
   if (doc.exists) {
-    const existingAliases = extractData(doc);
+    const existingAliases = doc.data().aliases;
+
     await docRef.update({
       id: id,
       aliases: [...existingAliases].filter((x) => !aliases.includes(x)),
     });
+  } else {
+    return { status: 404, message: "Id doesn't exist" };
   }
 
   return { status: 403, message: "Deleted" };
@@ -150,8 +154,9 @@ async function deleteAliases(req) {
 
 exports.alias = async (req, response) => {
   try {
+    console.info(req.body);
     const result = await ROUTES[req.method][req.path](req);
-    response?.status(200).json(result);
+    response?.status(result?.status || 200).json(result);
   } catch (e) {
     console.error(new Error(e));
     response?.status(500).json(e);
