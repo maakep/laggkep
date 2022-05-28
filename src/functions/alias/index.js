@@ -149,12 +149,12 @@ async function deleteAliases(req) {
     return { status: 404, message: "Id doesn't exist" };
   }
 
-  return { status: 403, message: "Deleted" };
+  return { status: 200, message: "Deleted" };
 }
 
 exports.alias = async (req, response) => {
   try {
-    console.info(req.body);
+    console.info(`Body for ${req.method}/${req.path}: `, req.body);
     const result = await ROUTES[req.method][req.path](req);
     response?.status(result?.status || 200).json(result);
   } catch (e) {
