@@ -34,7 +34,10 @@ async function deleteId(req) {
 
 async function getAliases(req) {
   const { aliases, profile } = req.query;
-  const aliasArray = aliases.split(",");
+  const aliasArray = aliases?.split(",");
+  if (aliasArray == undefined) {
+    return { status: 403, message: "Specify aliases" };
+  }
   const snapshot = await collectionRef
     .where("aliases", "array-contains-any", aliasArray)
     .get();
@@ -135,12 +138,14 @@ async function deleteAliases(req) {
   const doc = await docRef.get();
 
   if (doc.exists) {
-    const existingAliases = doc.data().aliases;
+    const existingAliases = extractData(doc);
     await docRef.update({
       id: id,
       aliases: [...existingAliases].filter((x) => !aliases.includes(x)),
     });
   }
+
+  return { status: 403, message: "Deleted" };
 }
 
 exports.alias = async (req, response) => {
