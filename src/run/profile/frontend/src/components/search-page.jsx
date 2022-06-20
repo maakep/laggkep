@@ -1,8 +1,9 @@
-import * as React from "react";
-import styled from "styled-components";
+import * as React from 'react';
+import styled from 'styled-components';
 
 export function SearchPage({ setData }) {
-  const [input, setInput] = React.useState("");
+  const [input, setInput] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   const onChange = (e) => {
     const text = e.currentTarget.value;
@@ -10,28 +11,35 @@ export function SearchPage({ setData }) {
   };
 
   const submitOnEnter = (e) => {
-    if (e.key == "Enter") {
+    if (e.key == 'Enter') {
       fetchData();
     }
   };
 
   async function fetchData() {
+    setLoading(true);
     const result = await (await fetch(`/api/profile/${input}`)).json();
     if (result?.data) {
       setData(result.data);
-      history.pushState({}, "", `/id/${input}`);
+      history.pushState({}, '', `/id/${input}`);
+    } else {
+      setLoading(false);
     }
   }
 
   return (
     <Body>
-      <Search
-        placeholder={"Any registered nickname"}
-        autoFocus={true}
-        value={input}
-        onChange={onChange}
-        onKeyDown={submitOnEnter}
-      />
+      {loading ? (
+        <div>Loading... Crunching the latest numbers, just for you.</div>
+      ) : (
+        <Search
+          placeholder={'Any registered nickname'}
+          autoFocus={true}
+          value={input}
+          onChange={onChange}
+          onKeyDown={submitOnEnter}
+        />
+      )}
     </Body>
   );
 }
@@ -41,7 +49,7 @@ const Body = styled.div`
   justify-content: center;
   align-items: center;
   height: 500px;
-  background: url("https://laggan.online/lagganwolf_lone.png");
+  background: url('https://laggan.online/lagganwolf_lone.png');
   background-size: cover;
 `;
 const Search = styled.input`

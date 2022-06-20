@@ -1,13 +1,21 @@
-import * as React from "react";
-import styled from "styled-components";
-import { Block, Row } from "../lib/blocks";
-import { Doughnut, Line } from "react-chartjs-2";
-import { colors, hoverColors } from "../lib/colors";
-import "chart.js/auto";
-import { Chart } from "chart.js";
+import * as React from 'react';
+import styled from 'styled-components';
+import {
+  Block,
+  Row,
+  RectGraphBlock,
+  SmallBlock,
+  SquareGraphBlock,
+  Title,
+} from '../lib/blocks';
+import { Doughnut, Line } from 'react-chartjs-2';
+import { colors, hoverColors } from '../lib/colors';
+import 'chart.js/auto';
+import { Chart } from 'chart.js';
+import { Alias } from './aliases';
 
-Chart.defaults.color = "#ffffff";
-Chart.defaults.font.weight = "bold";
+Chart.defaults.color = '#ffffff';
+Chart.defaults.font.weight = 'bold';
 
 /**
  *
@@ -34,6 +42,7 @@ export function ProfilePage({ data }) {
 
   const results = data.results.reverse();
   const aliases = data.aliases?.[0]?.aliases;
+  const id = data.aliases?.[0]?.id;
   const prefs = data.prefs?.[0]?.preference;
   let mmr = 1337;
 
@@ -43,12 +52,12 @@ export function ProfilePage({ data }) {
 
     const date = new Date(x.timestamp);
     const dateYMD = `${date.getUTCFullYear()}-${(
-      "0" +
+      '0' +
       (date.getUTCMonth() + 1)
-    ).slice(-2)}-${("0" + (date.getUTCDay() + 1)).slice(-2)}`;
+    ).slice(-2)}-${('0' + (date.getUTCDay() + 1)).slice(-2)}`;
 
-    const dateYMDT = `${dateYMD}-${("0" + date.getUTCHours()).slice(-2)}-${(
-      "0" + date.getUTCMinutes()
+    const dateYMDT = `${dateYMD}-${('0' + date.getUTCHours()).slice(-2)}-${(
+      '0' + date.getUTCMinutes()
     ).slice(-2)}`;
 
     if (gamesOverTime[dateYMD] == undefined) {
@@ -72,18 +81,11 @@ export function ProfilePage({ data }) {
     <Body>
       <Header>
         <HeaderItem>
-          LAGGAN, {location.href.split("/").pop().toLocaleUpperCase()} ({mmr})
+          LAGGAN, {id} ({mmr})
         </HeaderItem>
       </Header>
       <Row>
-        <SquareGraphBlock>
-          <Title>Aliases</Title>
-          <Scroller>
-            {aliases?.map((x) => {
-              return <SmallBlock>{x}</SmallBlock>;
-            })}
-          </Scroller>
-        </SquareGraphBlock>
+        <Alias aliasData={aliases} id={id} />
         <SquareGraphBlock>
           <Title>Dota preferences</Title>
           <div>
@@ -97,7 +99,7 @@ export function ProfilePage({ data }) {
           <div>
             <Doughnut
               options={getOptions()}
-              data={getData(["win", "loss"], [wins, losses])}
+              data={getData(['win', 'loss'], [wins, losses])}
             />
           </div>
         </SquareGraphBlock>
@@ -123,7 +125,7 @@ export function ProfilePage({ data }) {
               ...getData(
                 Object.keys(gamesOverTime),
                 Object.values(gamesOverTime),
-                "PLAYED GAMES"
+                'PLAYED GAMES'
               ),
             }}
           />
@@ -138,7 +140,7 @@ export function ProfilePage({ data }) {
               ...getData(
                 Object.keys(mmrOverTime),
                 Object.values(mmrOverTime),
-                "LAGGAN MMR"
+                'LAGGAN MMR'
               ),
             }}
           />
@@ -148,7 +150,7 @@ export function ProfilePage({ data }) {
   );
 }
 
-function getData(labels, data, label = "") {
+function getData(labels, data, label = '') {
   return {
     labels: labels,
     maintainAspectRatio: false,
@@ -159,7 +161,7 @@ function getData(labels, data, label = "") {
         data: data,
         backgroundColor: colors,
         hoverBackgroundColor: hoverColors,
-        borderColor: "#ffffff",
+        borderColor: '#ffffff',
       },
     ],
   };
@@ -169,7 +171,7 @@ function getOptions() {
   return {
     legend: {
       display: false,
-      position: "right",
+      position: 'right',
     },
     elements: {
       arc: {
@@ -194,49 +196,4 @@ const HeaderItem = styled.div`
   justify-content: center;
   align-items: center;
   padding: 8px;
-`;
-
-const SquareGraphBlock = styled(Block)`
-  width: 300px;
-  height: 300px;
-  margin: 16px;
-  position: relative;
-`;
-
-const RectGraphBlock = styled(Block)`
-  width: 900px;
-  height: 460px;
-  margin: 16px;
-  position: relative;
-`;
-
-const SmallBlock = styled.div`
-  padding: 8px;
-  margin: 8px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-`;
-
-const Title = styled.span`
-  position: absolute;
-  font-size: 20px;
-  top: -13px;
-  font-weight: bold;
-`;
-
-const Scroller = styled.div`
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgb(79, 118, 165);
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #292e34;
-  }
 `;
