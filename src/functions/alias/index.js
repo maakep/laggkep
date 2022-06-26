@@ -127,7 +127,7 @@ function validate(id, aliases) {
   return (
     !isNaN(id) &&
     aliases.every(
-      (x) => typeof x == 'string' && x.match(/^[a-z0-9åäö_-./]{2,35}$/g)
+      (x) => typeof x == 'string' && x.match(/^[a-z0-9åäö_-.\/]{2,35}$/g)
     )
   );
 }
