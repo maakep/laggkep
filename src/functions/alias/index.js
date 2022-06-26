@@ -1,20 +1,20 @@
-const { Firestore } = require("@google-cloud/firestore");
+const { Firestore } = require('@google-cloud/firestore');
 const firestore = new Firestore();
-const collectionRef = firestore.collection("aliases");
+const collectionRef = firestore.collection('aliases');
 
 const ROUTES = {
   DELETE: {
-    "/": deleteAliases,
-    "/id": deleteId,
+    '/': deleteAliases,
+    '/id': deleteId,
   },
   POST: {
-    "/": setAliases,
-    "/query": getQuery,
+    '/': setAliases,
+    '/query': getQuery,
   },
   GET: {
-    "/": getAliases,
-    "/id": getAliasesForId,
-    "/all": getAllAliases,
+    '/': getAliases,
+    '/id': getAliasesForId,
+    '/all': getAllAliases,
   },
 };
 
@@ -29,17 +29,17 @@ async function deleteId(req) {
   const doc = collectionRef.doc(id);
   await doc.delete();
 
-  return { status: 200, message: "Very great" };
+  return { status: 200, message: 'Very great' };
 }
 
 async function getAliases(req) {
   const { aliases, profile } = req.query;
-  const aliasArray = aliases?.split(",");
+  const aliasArray = aliases?.split(',');
   if (aliasArray == undefined) {
-    return { status: 403, message: "Specify aliases" };
+    return { status: 403, message: 'Specify aliases' };
   }
   const snapshot = await collectionRef
-    .where("aliases", "array-contains-any", aliasArray)
+    .where('aliases', 'array-contains-any', aliasArray)
     .get();
 
   const data = extractData(snapshot);
@@ -53,9 +53,9 @@ async function getAliases(req) {
     }
   }
 
-  if (profile == "full") {
+  if (profile == 'full') {
     return data;
-  } else if (profile == "partial") {
+  } else if (profile == 'partial') {
     return aliasArray.map((x) => ({
       alias: x,
       id: data.find((y) => y.aliases.includes(x))?.id,
@@ -96,7 +96,7 @@ async function setAliases(req) {
 
   const valid = validate(id, aliases);
   if (!valid) {
-    return { status: 400, message: "Invalid characters: [a-z0-9åäö_-]" };
+    return { status: 400, message: 'Valid characters: [a-z0-9åäö_-.]' };
   }
 
   const docRef = collectionRef.doc(id);
@@ -106,7 +106,7 @@ async function setAliases(req) {
     const existingAliases = doc.data().aliases;
 
     if (existingAliases.length > 50) {
-      return { status: 403, message: "Too many, delete some" };
+      return { status: 403, message: 'Too many, delete some' };
     }
 
     await docRef.update({
@@ -120,14 +120,14 @@ async function setAliases(req) {
     });
   }
 
-  return { status: 200, message: "Very great" };
+  return { status: 200, message: 'Very great' };
 }
 
 function validate(id, aliases) {
   return (
     !isNaN(id) &&
     aliases.every(
-      (x) => typeof x == "string" && x.match(/^[a-z0-9åäö_-]{2,35}$/g)
+      (x) => typeof x == 'string' && x.match(/^[a-z0-9åäö_-./]{2,35}$/g)
     )
   );
 }
@@ -149,7 +149,7 @@ async function deleteAliases(req) {
     return { status: 404, message: "Id doesn't exist" };
   }
 
-  return { status: 200, message: "Deleted" };
+  return { status: 200, message: 'Deleted' };
 }
 
 exports.alias = async (req, response) => {
