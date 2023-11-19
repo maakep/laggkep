@@ -1,21 +1,22 @@
-const { Firestore } = require("@google-cloud/firestore");
-const axios = require("axios").default;
+const { Firestore } = require('@google-cloud/firestore');
+const axios = require('axios').default;
 const firestore = new Firestore();
-const collectionRef = firestore.collection("results");
+const collectionRef = firestore.collection('results');
 
-const ALIAS_URL = process.env._FUNCTION_BASE_URL + "/alias";
+const ALIAS_URL = process.env._FUNCTION_BASE_URL + '/alias';
 
 const ROUTES = {
   DELETE: {
-    "/": deleteResult,
+    '/': deleteResult,
   },
   POST: {
-    "/": saveResults,
-    "/query": getQuery,
+    '/': saveResults,
+    '/query': getQuery,
   },
   GET: {
-    "/": getResultsForUser,
-    "/all": getAllResults,
+    '/': getResultsForUser,
+    '/mmr': getMmrForUser,
+    '/all': getAllResults,
   },
 };
 
@@ -34,7 +35,7 @@ async function getQuery(req) {
     query = query.where(x[0], x[1], x[2]);
   });
 
-  const snapshot = await query.orderBy("timestamp", "desc").get();
+  const snapshot = await query.orderBy('timestamp', 'desc').get();
   return extractData(snapshot);
 }
 
@@ -42,25 +43,29 @@ async function getResultsForUser(req) {
   const { user } = req.query;
   const id = (await singleAliasToID(user)) || user;
 
-  const snapshot = await collectionRef
-    .where("username", "==", id)
-    .orderBy("timestamp", "desc")
-    .get();
+  const snapshot = await collectionRef.where('username', '==', id).orderBy('timestamp', 'desc').get();
   return extractData(snapshot);
+}
+
+async function getMmrForUser(req) {
+  const results = await getResultsForUser(req);
+  const mmr = results.reduce((a, c) => (a += c.win ? 25 : -25), 1337);
+
+  return { status: 200, message: mmr };
 }
 
 async function deleteResult(req) {
   const { id } = req.body;
-  const doc = await collectionRef.where("matchId", "==", id).get();
+  const doc = await collectionRef.where('matchId', '==', id).get();
   doc.forEach((x) => {
     x.ref.delete();
   });
 
-  return { status: 200, message: "Very great" };
+  return { status: 200, message: 'Very great' };
 }
 
 async function getAllResults(req) {
-  const snapshot = await collectionRef.orderBy("timestamp", "desc").get();
+  const snapshot = await collectionRef.orderBy('timestamp', 'desc').get();
   const data = extractData(snapshot);
   return data;
 }
@@ -70,7 +75,7 @@ async function saveResults(req) {
 
   const date = new Date().toISOString();
   const resultBatch = [];
-  const snapshot = await collectionRef.orderBy("gameId", "desc").limit(1).get();
+  const snapshot = await collectionRef.orderBy('gameId', 'desc').limit(1).get();
   const data = extractData(snapshot);
   const gameId = (data[0]?.gameId || 0) + 1;
 
@@ -78,7 +83,7 @@ async function saveResults(req) {
     for (const p in teams[team]) {
       let player = teams[team][p]?.trim();
 
-      if (!player.startsWith("<@")) {
+      if (!player.startsWith('<@')) {
         const id = await singleAliasToID(player);
         player = id || player;
       }
@@ -89,9 +94,9 @@ async function saveResults(req) {
         username: player,
         timestamp: date,
         win: parseInt(team) == winner,
-        _game: game?.trim() || "",
-        game: game?.trim().toLowerCase() || "",
-        matchId: matchId?.trim() || "",
+        _game: game?.trim() || '',
+        game: game?.trim().toLowerCase() || '',
+        matchId: matchId?.trim() || '',
       };
       resultBatch.push(gameResult);
     }
