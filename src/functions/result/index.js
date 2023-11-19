@@ -51,7 +51,7 @@ async function getMmrForUser(req) {
   const results = await getResultsForUser(req);
   const mmr = results.reduce((a, c) => (a += c.win ? 25 : -25), 1337);
 
-  return { status: 200, message: mmr };
+  return { status: 200, mmr: mmr };
 }
 
 async function deleteResult(req) {
